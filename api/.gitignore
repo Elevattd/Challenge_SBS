@@ -1,9 +1,3 @@
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
 # Logs
 logs
 *.log
@@ -108,4 +102,3 @@ dist
 
 # TernJS port file
 .tern-port
-api/node_modules
