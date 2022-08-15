@@ -3,6 +3,13 @@ import { IHomePageState } from "../../containers/Home/types";
 
 const initialState: IHomePageState = {
   products: [],
+  product: {
+    id: "",
+    name: "",
+    description: "",
+    price: 0,
+    image: "",
+  },
 };
 
 const productsSlice = createSlice({
@@ -12,8 +19,14 @@ const productsSlice = createSlice({
     setProducts: (state, action) => {
       state.products = action.payload.products;
     },
+    setProduct: (state, action) => {
+      state.product = action.payload.product;
+    },
+    clearProduct: (state) => {
+      state.product = initialState.product;
+    },
   },
 });
 
-export const { setProducts } = productsSlice.actions;
+export const { setProducts, setProduct, clearProduct } = productsSlice.actions;
 export default productsSlice.reducer;

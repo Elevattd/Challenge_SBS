@@ -1,15 +1,19 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
-import { useAppSelector } from "../../hooks";
+import { actionDispatch } from "../../features/actions";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import productsService from "../../services/productsService";
 import ProductDetails from "../ProductDetails/ProductDetails";
 
 const ProductList = () => {
   const products = useAppSelector((state) => state.products.products);
   const [open, setOpen] = useState(false);
-  const [productId, setProductId] = useState("");
+  const { setProduct } = actionDispatch(useAppDispatch());
 
   const handleClick = async (productId: string) => {
-    setProductId(productId);
+    productsService.getProduct(productId).then((product) => {
+      setProduct(product);
+    });
     setOpen(true);
   };
 
@@ -42,7 +46,6 @@ const ProductList = () => {
           handleClose={() => {
             setOpen(false);
           }}
-          product={productId}
         />
       )}
     </div>

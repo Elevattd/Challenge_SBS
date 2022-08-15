@@ -7,7 +7,9 @@ import {
   Modal,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
+import { useEffect } from "react";
+import { actionDispatch } from "../../features/actions";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 const style = {
   position: "absolute" as "absolute",
@@ -21,8 +23,16 @@ const style = {
   p: 4,
 };
 
-const ProductDetails = ({ open, handleClose, product }: any) => {
-  console.log(product);
+const ProductDetails = ({ open, handleClose }: any) => {
+  const product = useAppSelector((state) => state.products.product);
+  const { clearProduct } = actionDispatch(useAppDispatch());
+
+  const handleCloseModal = (e: any) => {
+    e.preventDefault();
+    handleClose();
+    clearProduct();
+  };
+
   return (
     <div>
       <Modal
@@ -30,27 +40,35 @@ const ProductDetails = ({ open, handleClose, product }: any) => {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        hideBackdrop={true}
+        disableEscapeKeyDown={true}
       >
-        <Card sx={style}>
-          <CardMedia
-            component="img"
-            alt="green iguana"
-            height="140"
-            image="/static/images/cards/contemplative-reptile.jpg"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Lizard
+        {product && Object.keys(product).length ? (
+          <Card sx={style}>
+            <img src={product.image} alt={product.name} height="250" />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {product?.name?.replace(
+                  product.name.charAt(0),
+                  product.name.charAt(0).toUpperCase()
+                )}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {product.description}
+              </Typography>
+            </CardContent>
+            <Typography variant="body1" color="text.secondary">
+              $ {product.price},00
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over
-              6,000 species, ranging across all continents except Antarctica
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Cerrar</Button>
-          </CardActions>
-        </Card>
+            <CardActions>
+              <Button size="small" onClick={handleCloseModal}>
+                Cerrar
+              </Button>
+            </CardActions>
+          </Card>
+        ) : (
+          <h1>cargando</h1>
+        )}
       </Modal>
     </div>
   );
