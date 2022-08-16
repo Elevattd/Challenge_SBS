@@ -17,6 +17,7 @@ import { useAppDispatch } from "../../hooks";
 import { useNavigate } from "react-router-dom";
 import { Search, StyledInputBase } from "./useNavbar";
 import "./Navbar.css";
+import { Toast } from "../../utils/alerts";
 
 const Navbar = () => {
   const [openMenu, setOpenMnu] = React.useState(false);
@@ -43,7 +44,10 @@ const Navbar = () => {
       .getProductByName(name.toLowerCase())
       .then((product) => {
         if (!product?.productByName) {
-          alert("No products found");
+          Toast.fire({
+            icon: "error",
+            title: "Producto no encontrado",
+          });
           return;
         }
         setName("");
