@@ -15,6 +15,8 @@ import { useState } from "react";
 import ProductUpdate from "../ProductUpdate/ProductUpdate";
 import productsService from "../../services/productsService";
 import { socket } from "../../graphql";
+import Swal from "sweetalert2";
+import { Toast } from "../../utils/alerts";
 
 const ProductList = () => {
   const products = useAppSelector((state) => state.products.products);
@@ -28,8 +30,25 @@ const ProductList = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await productsService.deleteProduct(id);
-      socket.emit("deleteProduct");
+      Swal.fire({
+        title: `
+        ¿Esta seguro que desea elimiar el producto?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "orange",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Cancel",
+        confirmButtonText: "Confirm",
+      }).then(async (r) => {
+        if (r.isConfirmed) {
+          await productsService.deleteProduct(id);
+          socket.emit("deleteProduct");
+          Toast.fire({
+            icon: "warning",
+            title: `Producto eliminado!`,
+          });
+        }
+      });
     } catch (error) {
       console.log("error", error);
     }

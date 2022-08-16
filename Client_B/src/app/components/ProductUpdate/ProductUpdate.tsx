@@ -2,6 +2,7 @@ import { Box, Button, Input, Modal, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { socket } from "../../graphql";
 import productsService from "../../services/productsService";
+import { Toast } from "../../utils/alerts";
 import { Product } from "../ProductList/types";
 
 const style = {
@@ -40,8 +41,16 @@ const ProductUpdate = ({ open, handleClose, inputData }: any) => {
         setInput(initialState);
         socket.emit("updateProduct");
         handleClose();
+        Toast.fire({
+          icon: "success",
+          title: "Producto modificado correctamente!",
+        });
       }
     } catch (error) {
+      Toast.fire({
+        icon: "error",
+        title: "Se produjo un error al modificar el producto!",
+      });
       console.log("error", error);
     }
   };
