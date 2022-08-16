@@ -7,4 +7,5 @@ export interface IHomePageState {
 
 export interface IUiPageState {
   footer: boolean;
+  isLoading: boolean;
 }

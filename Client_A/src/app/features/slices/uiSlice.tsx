@@ -3,6 +3,7 @@ import { IUiPageState } from "../../containers/Home/types";
 
 const initialState: IUiPageState = {
   footer: true,
+  isLoading: false,
 };
 
 const uiSlice = createSlice({
@@ -15,8 +16,11 @@ const uiSlice = createSlice({
     setFooterOff: (state) => {
       state.footer = false;
     },
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
   },
 });
 
-export const { setFooterOn, setFooterOff } = uiSlice.actions;
+export const { setFooterOn, setFooterOff, setIsLoading } = uiSlice.actions;
 export default uiSlice.reducer;

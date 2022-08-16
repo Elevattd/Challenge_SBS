@@ -9,6 +9,7 @@ import {
 import useDetails from "../../containers/Details/useDetails";
 import { actionDispatch } from "../../features/actions";
 import { useAppDispatch, useAppSelector } from "../../hooks";
+import Loader from "../Loader/Loader";
 
 const ProductDetails = ({ open, handleClose }: any) => {
   const product = useAppSelector((state) => state.products.product);
@@ -31,7 +32,9 @@ const ProductDetails = ({ open, handleClose }: any) => {
         hideBackdrop={true}
         disableEscapeKeyDown={true}
       >
-        {product ? (
+        {!product ? (
+          <Loader />
+        ) : (
           <Card sx={style}>
             <img src={product.image} alt={product.name} height="250" />
             <CardContent>
@@ -54,8 +57,6 @@ const ProductDetails = ({ open, handleClose }: any) => {
               </Button>
             </CardActions>
           </Card>
-        ) : (
-          <h1>cargando</h1>
         )}
       </Modal>
     </div>
