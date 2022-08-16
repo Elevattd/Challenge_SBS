@@ -1,10 +1,11 @@
 import { GraphQLClient } from "graphql-request";
 import io from "socket.io-client";
 
-export const graphQLClient = new GraphQLClient(
-  "http://localhost:4000/graphql",
-  { headers: {} }
-);
+const API_URL = process.env.API_URL;
+
+export const graphQLClient = new GraphQLClient(API_URL + "/graphql", {
+  headers: {},
+});
 
 // Socket io connection
-export const socket = io("http://localhost:4000");
+export const socket = io(API_URL || "http://localhost:4000/");
