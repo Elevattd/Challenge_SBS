@@ -1,10 +1,11 @@
 import { GraphQLClient } from "graphql-request";
 import io from "socket.io-client";
 
-export const graphQLClient = new GraphQLClient(
-  "https://challenge-sbs.herokuapp.com/graphql",
-  { headers: {} }
-);
+const API = process.env.REACT_APP_API_URL;
+
+export const graphQLClient = new GraphQLClient(`${API}graphql`, {
+  headers: {},
+});
 
 // Socket io connection
 export const socket = io("https://challenge-sbs.herokuapp.com/");
