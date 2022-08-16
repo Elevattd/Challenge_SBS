@@ -29,6 +29,10 @@ const ProductCreate = () => {
       } else {
         let newProduct = await productsService.postProduct({ ...input });
         if (newProduct) {
+          Toast.fire({
+            icon: "success",
+            title: `Producto creado correctamente!.`,
+          });
           setInput(initialState);
           socket.emit("createProduct");
           handleClose();

@@ -20,7 +20,7 @@ const Home = () => {
     }
   }, []);
 
-  socket.on("updateList", () => {
+  socket.on("refreshList", () => {
     productsService.getProducts().then((products) => {
       setProducts(products);
     });

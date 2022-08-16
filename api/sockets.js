@@ -4,15 +4,15 @@ const sockets = (io) => {
       console.log("SOCKET.IO    --> ON:", socket.client.id);
 
       socket.on("createProduct", () => {
-        io.emit("updateList");
+        io.emit("refreshList");
       });
 
       socket.on("updateProduct", () => {
-        io.emit("updateList");
+        io.emit("refreshList");
       });
 
       socket.on("deleteProduct", () => {
-        io.emit("updateList");
+        io.emit("refreshList");
       });
 
       io.on("disconnect", () => {
