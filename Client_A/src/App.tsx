@@ -23,9 +23,6 @@ function App() {
           <Footer />
         </footer>
       ) : null}
-      {/* <footer>
-        <Footer />
-      </footer> */}
     </div>
   );
 }

@@ -3,7 +3,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Modal,
   Typography,
 } from "@mui/material";
@@ -32,7 +31,7 @@ const ProductDetails = ({ open, handleClose }: any) => {
         hideBackdrop={true}
         disableEscapeKeyDown={true}
       >
-        {product && Object.keys(product).length ? (
+        {product ? (
           <Card sx={style}>
             <img src={product.image} alt={product.name} height="250" />
             <CardContent>

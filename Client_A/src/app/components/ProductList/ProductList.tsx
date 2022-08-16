@@ -1,6 +1,5 @@
-import styled from "@emotion/styled";
-import { Button, Card, Grid, Paper, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Button, Card, Grid, Typography } from "@mui/material";
+import { useState } from "react";
 import { actionDispatch } from "../../features/actions";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import productsService from "../../services/productsService";
@@ -12,9 +11,8 @@ const ProductList = () => {
   const products = useAppSelector(
     (state): Product[] => state.products.products
   );
-
   const [open, setOpen] = useState(false);
-  const { setProduct, clearProduct } = actionDispatch(useAppDispatch());
+  const { setProduct } = actionDispatch(useAppDispatch());
 
   const handleClick = async (productId: string) => {
     productsService.getProduct(productId).then((product) => {
@@ -53,6 +51,10 @@ const ProductList = () => {
               Más info
             </Button>
           </Card>
+          <br />
+          <br />
+          <br />
+          <br />
         </Grid>
       ))
     : null;

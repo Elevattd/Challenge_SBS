@@ -1,6 +1,5 @@
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import productsService from "../../services/productsService";
 
 const useNavbar = () => {
   const Search = styled("div")(({ theme }) => ({
