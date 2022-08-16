@@ -1,31 +1,15 @@
-import { Box, Button, Grid, Input, Modal, TextField } from "@mui/material";
-import React, { useEffect } from "react";
+import { Box, Button, Grid, Modal, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { socket } from "../../graphql";
 import productsService from "../../services/productsService";
 import { Toast } from "../../utils/alerts";
-import { Product } from "../ProductList/types";
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "auto",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { errorInput, validateForm } from "../../utils/hooks/useValidate";
+import useProductCreate from "../ProductCreate/useProductCreate";
 
 const ProductUpdate = ({ open, handleClose, inputData }: any) => {
-  const initialState: Product = {
-    name: "",
-    description: "",
-    image: "",
-    price: 0,
-  };
-
+  const { style, initialState } = useProductCreate();
   const [input, setInput] = React.useState(initialState);
+  const [errorInput, setErrorInput] = useState<errorInput>({});
 
   useEffect(() => {
     if (Object.keys(inputData).length) {
@@ -59,7 +43,9 @@ const ProductUpdate = ({ open, handleClose, inputData }: any) => {
     target,
   }: React.ChangeEvent<HTMLInputElement>) => {
     setInput({ ...input, [target.name]: target.value });
+    setErrorInput(validateForm({ ...input, [target.name]: target.value }));
   };
+
   return (
     <div>
       <Modal
@@ -73,6 +59,8 @@ const ProductUpdate = ({ open, handleClose, inputData }: any) => {
             <Grid container spacing={1}>
               <Grid xs={12} sm={6} item>
                 <TextField
+                  error={!errorInput.name ? false : true}
+                  helperText={errorInput.name}
                   label="Nombre"
                   name="name"
                   type="text"
@@ -86,6 +74,7 @@ const ProductUpdate = ({ open, handleClose, inputData }: any) => {
                   required
                 />
               </Grid>
+
               <Grid xs={12} item sm={6}>
                 <TextField
                   label="Precio"
@@ -99,6 +88,8 @@ const ProductUpdate = ({ open, handleClose, inputData }: any) => {
                   variant="outlined"
                   fullWidth
                   required
+                  error={!errorInput.price ? false : true}
+                  helperText={errorInput.price}
                 />
               </Grid>
               <Grid xs={12} item>
@@ -114,6 +105,8 @@ const ProductUpdate = ({ open, handleClose, inputData }: any) => {
                   variant="outlined"
                   fullWidth
                   required
+                  error={!errorInput.description ? false : true}
+                  helperText={errorInput.description}
                 />
               </Grid>
 
@@ -123,13 +116,15 @@ const ProductUpdate = ({ open, handleClose, inputData }: any) => {
                   name="image"
                   type="text"
                   id="image"
-                  placeholder="Image del producto"
+                  placeholder="image del producto"
                   className="input-field"
                   onChange={handleInputChange}
                   value={input.image}
                   variant="outlined"
                   fullWidth
                   required
+                  error={!errorInput.image ? false : true}
+                  helperText={errorInput.image}
                 />
               </Grid>
 

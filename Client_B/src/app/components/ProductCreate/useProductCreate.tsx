@@ -17,7 +17,7 @@ const useProductCreate = () => {
     name: "",
     description: "",
     image: "",
-    price: null,
+    price: 0,
   };
 
   return { style, initialState };

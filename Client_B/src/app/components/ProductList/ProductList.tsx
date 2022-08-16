@@ -37,8 +37,8 @@ const ProductList = () => {
         showCancelButton: true,
         confirmButtonColor: "orange",
         cancelButtonColor: "#d33",
-        cancelButtonText: "Cancel",
-        confirmButtonText: "Confirm",
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Confirmar",
       }).then(async (r) => {
         if (r.isConfirmed) {
           await productsService.deleteProduct(id);

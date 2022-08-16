@@ -1,25 +1,38 @@
+import React, { useEffect, useState } from "react";
 import { Box, Button, Grid, Modal, TextField } from "@mui/material";
-import React from "react";
 import { socket } from "../../graphql";
 import productsService from "../../services/productsService";
+import { errorInput, validateForm } from "../../utils/hooks/useValidate";
 import useProductCreate from "./useProductCreate";
+import { Toast } from "../../utils/alerts";
 
 const ProductCreate = () => {
   const { style, initialState } = useProductCreate();
   const [input, setInput] = React.useState(initialState);
-
+  const [errorInput, setErrorInput] = useState<errorInput>({});
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setInput(initialState);
+    setOpen(false);
+    setErrorInput({});
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      let newProduct = await productsService.postProduct({ ...input });
-      if (newProduct) {
-        setInput(initialState);
-        socket.emit("createProduct");
-        handleClose();
+      if (Object.keys(errorInput).length >= 1 || input.name === "") {
+        Toast.fire({
+          icon: "error",
+          title: `Corrija los errores.`,
+        });
+      } else {
+        let newProduct = await productsService.postProduct({ ...input });
+        if (newProduct) {
+          setInput(initialState);
+          socket.emit("createProduct");
+          handleClose();
+        }
       }
     } catch (error) {
       console.log("error", error);
@@ -30,7 +43,9 @@ const ProductCreate = () => {
     target,
   }: React.ChangeEvent<HTMLInputElement>) => {
     setInput({ ...input, [target.name]: target.value });
+    setErrorInput(validateForm({ ...input, [target.name]: target.value }));
   };
+
   return (
     <div>
       <br />
@@ -51,6 +66,8 @@ const ProductCreate = () => {
             <Grid container spacing={1}>
               <Grid xs={12} sm={6} item>
                 <TextField
+                  error={!errorInput.name ? false : true}
+                  helperText={errorInput.name}
                   label="Nombre"
                   name="name"
                   type="text"
@@ -78,6 +95,8 @@ const ProductCreate = () => {
                   variant="outlined"
                   fullWidth
                   required
+                  error={!errorInput.price ? false : true}
+                  helperText={errorInput.price}
                 />
               </Grid>
               <Grid xs={12} item>
@@ -93,6 +112,8 @@ const ProductCreate = () => {
                   variant="outlined"
                   fullWidth
                   required
+                  error={!errorInput.description ? false : true}
+                  helperText={errorInput.description}
                 />
               </Grid>
 
@@ -109,6 +130,8 @@ const ProductCreate = () => {
                   variant="outlined"
                   fullWidth
                   required
+                  error={!errorInput.image ? false : true}
+                  helperText={errorInput.image}
                 />
               </Grid>
 
