@@ -1,16 +1,20 @@
 import styled from "@emotion/styled";
 import { Button, Card, Grid, Paper, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { actionDispatch } from "../../features/actions";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import productsService from "../../services/productsService";
 import ProductDetails from "../ProductDetails/ProductDetails";
 import "./ProductList.css";
+import { Product } from "./types";
 
 const ProductList = () => {
-  const products = useAppSelector((state) => state.products.products);
+  const products = useAppSelector(
+    (state): Product[] => state.products.products
+  );
+
   const [open, setOpen] = useState(false);
-  const { setProduct } = actionDispatch(useAppDispatch());
+  const { setProduct, clearProduct } = actionDispatch(useAppDispatch());
 
   const handleClick = async (productId: string) => {
     productsService.getProduct(productId).then((product) => {

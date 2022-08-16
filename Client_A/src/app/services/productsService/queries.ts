@@ -26,3 +26,15 @@ export const GET_PRODUCT_ID = gql`
     }
   }
 `;
+
+export const GET_PRODUCT_BY_NAME = gql`
+  query ($name: String!) {
+    productByName(name: $name) {
+      id
+      name
+      description
+      image
+      price
+    }
+  }
+`;
