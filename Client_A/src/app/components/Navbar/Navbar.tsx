@@ -1,8 +1,9 @@
+import React from "react";
+import productsService from "../../services/productsService";
 import {
   AppBar,
   Avatar,
   Box,
-  Button,
   Drawer,
   IconButton,
   Toolbar,
@@ -10,14 +11,42 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import React from "react";
-import { Link } from "react-router-dom";
 import { deepOrange, deepPurple } from "@mui/material/colors";
-import { Search, SearchIconWrapper, StyledInputBase } from "./useNavbar";
+import "./Navbar.css";
+import useNavbar from "./useNavbar";
+import { actionDispatch } from "../../features/actions";
+import { useAppDispatch } from "../../hooks";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [openMenu, setOpenMnu] = React.useState(false);
+  const [name, setName] = React.useState("");
+  const { Search, StyledInputBase } = useNavbar();
+  const { setProduct } = actionDispatch(useAppDispatch());
   const currentUser = null;
+  const navigate = useNavigate();
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    event.preventDefault();
+    setName(event.target.value as string);
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      let product = await productsService.getProductByName(name.toLowerCase());
+      if (!product) {
+        alert("No products found");
+      }
+      setName("");
+      console.log("product", product.productByName);
+      setProduct(product);
+      let id = product?.productByName?.id;
+      navigate(`/product/${id}`);
+    } catch (error) {
+      throw error;
+    }
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -60,12 +89,15 @@ const Navbar = () => {
               marginRight: "1rem",
             }}
           >
-            <SearchIconWrapper>
+            <button onClick={handleSubmit}>
               <SearchIcon />
-            </SearchIconWrapper>
+            </button>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              name="search"
+              value={name}
+              onChange={handleChange}
             />
           </Search>
         </Toolbar>

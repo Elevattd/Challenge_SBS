@@ -2,7 +2,7 @@ const { GraphQLSchema, GraphQLObjectType } = require("graphql");
 const {
   products,
   product,
-  productsByName,
+  productByName,
 } = require("./products/productQueries");
 const { registrer, login } = require("./user/userMutations");
 const { user, users } = require("./user/userQueries");
@@ -21,7 +21,7 @@ const QueryType = new GraphQLObjectType({
     user,
     products,
     product,
-    productsByName,
+    productByName,
   },
 });
 

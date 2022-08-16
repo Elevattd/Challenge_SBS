@@ -23,7 +23,7 @@ const product = {
   resolve: (_, { id }) => Product.findById(id),
 };
 
-const productsByName = {
+const productByName = {
   type: ProductType,
   description: "Get a product by name",
   args: {
@@ -32,4 +32,4 @@ const productsByName = {
   resolve: (_, { name }) => Product.findOne({ name }),
 };
 
-module.exports = { products, product, productsByName };
+module.exports = { products, product, productByName };
