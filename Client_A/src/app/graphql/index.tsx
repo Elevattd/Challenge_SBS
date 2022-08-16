@@ -2,7 +2,7 @@ import { GraphQLClient } from "graphql-request";
 import io from "socket.io-client";
 
 export const graphQLClient = new GraphQLClient(
-  `${process.env.REACT_APP_API_URL}graphql`,
+  "http://localhost:4000/graphql" || `${process.env.REACT_APP_API_URL}graphql`,
   {
     headers: {},
   }
