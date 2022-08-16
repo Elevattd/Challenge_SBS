@@ -4,7 +4,7 @@ import productsService from "../../services/productsService";
 import { socket } from "../../graphql";
 import { useEffect } from "react";
 import { actionDispatch } from "../../features/actions";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 
 const Home = () => {
   const { setProducts } = actionDispatch(useAppDispatch());
@@ -27,6 +27,7 @@ const Home = () => {
 
   return (
     <Container>
+      <Typography variant="h1">NFT store.</Typography>
       <ProductList />
     </Container>
   );
