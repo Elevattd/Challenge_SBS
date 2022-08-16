@@ -19,7 +19,7 @@ const Home = () => {
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  socket.on("updateList", () => {
+  socket.on("refreshList", () => {
     productsService.getProducts().then((products) => {
       setProducts(products);
     });
