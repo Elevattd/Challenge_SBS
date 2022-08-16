@@ -1,4 +1,4 @@
-import { Box, Button, Input, Modal, TextField } from "@mui/material";
+import { Box, Button, Grid, Input, Modal, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { socket } from "../../graphql";
 import productsService from "../../services/productsService";
@@ -70,64 +70,89 @@ const ProductUpdate = ({ open, handleClose, inputData }: any) => {
       >
         <Box sx={style}>
           <form onSubmit={handleSubmit}>
-            <Input
-              name="name"
-              type="text"
-              id="name"
-              placeholder="Nombre del producto"
-              className="input-field"
-              onChange={handleInputChange}
-              value={input.name}
-            />
-            <br />
-            <Input
-              name="description"
-              type="text"
-              id="description"
-              placeholder="description del producto"
-              className="input-field"
-              onChange={handleInputChange}
-              value={input.description}
-            />
-            <br />
-            <Input
-              name="image"
-              type="text"
-              id="image"
-              placeholder="image del producto"
-              className="input-field"
-              onChange={handleInputChange}
-              value={input.image}
-            />
-            <br />
-            <Input
-              name="price"
-              type="number"
-              id="price"
-              placeholder="price del producto"
-              className="input-field"
-              onChange={handleInputChange}
-              value={input.price}
-            />
-            <br />
-            <div>
-              <Button
-                color="primary"
-                variant="outlined"
-                type="submit"
-                className="btn-primary"
-              >
-                Aceptar
-              </Button>
-              <Button
-                color="primary"
-                variant="outlined"
-                className="btn-primary"
-                onClick={handleClose}
-              >
-                Cancelar
-              </Button>
-            </div>
+            <Grid container spacing={1}>
+              <Grid xs={12} sm={6} item>
+                <TextField
+                  label="Nombre"
+                  name="name"
+                  type="text"
+                  id="name"
+                  placeholder="Nombre del producto"
+                  className="input-field"
+                  onChange={handleInputChange}
+                  value={input.name}
+                  variant="outlined"
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid xs={12} item sm={6}>
+                <TextField
+                  label="Precio"
+                  name="price"
+                  type="number"
+                  id="price"
+                  placeholder="Precio del producto"
+                  className="input-field"
+                  onChange={handleInputChange}
+                  value={input.price}
+                  variant="outlined"
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid xs={12} item>
+                <TextField
+                  label="Descripción"
+                  name="description"
+                  type="text"
+                  id="description"
+                  placeholder="Descripción del producto"
+                  className="input-field"
+                  onChange={handleInputChange}
+                  value={input.description}
+                  variant="outlined"
+                  fullWidth
+                  required
+                />
+              </Grid>
+
+              <Grid xs={12} item>
+                <TextField
+                  label="Imagen"
+                  name="image"
+                  type="text"
+                  id="image"
+                  placeholder="Image del producto"
+                  className="input-field"
+                  onChange={handleInputChange}
+                  value={input.image}
+                  variant="outlined"
+                  fullWidth
+                  required
+                />
+              </Grid>
+
+              <Grid xs={12} item>
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  type="submit"
+                  className="btn-primary"
+                >
+                  Aceptar
+                </Button>
+
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  className="btn-primary"
+                  onClick={handleClose}
+                >
+                  Cancelar
+                </Button>
+              </Grid>
+            </Grid>
           </form>
         </Box>
       </Modal>
