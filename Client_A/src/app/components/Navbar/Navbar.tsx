@@ -12,40 +12,44 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { deepOrange, deepPurple } from "@mui/material/colors";
-import "./Navbar.css";
-import useNavbar from "./useNavbar";
 import { actionDispatch } from "../../features/actions";
 import { useAppDispatch } from "../../hooks";
 import { useNavigate } from "react-router-dom";
+import { Search, StyledInputBase } from "./useNavbar";
+import "./Navbar.css";
 
 const Navbar = () => {
   const [openMenu, setOpenMnu] = React.useState(false);
   const [name, setName] = React.useState("");
-  const { Search, StyledInputBase } = useNavbar();
   const { setProduct } = actionDispatch(useAppDispatch());
   const currentUser = null;
   const navigate = useNavigate();
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    event.preventDefault();
-    setName(event.target.value as string);
+  const handleChange = (e: any) => {
+    e.preventDefault();
+    console.log("que mierda pasa", e.target.value);
+    setName(e.target.value.trimStart() as string);
   };
 
   const handleSubmit = async (e: any) => {
+    //TODO: Poner alertas aca.
     e.preventDefault();
-    try {
-      let product = await productsService.getProductByName(name.toLowerCase());
-      if (!product) {
-        alert("No products found");
-      }
-      setName("");
-      console.log("product", product.productByName);
-      setProduct(product);
-      let id = product?.productByName?.id;
-      navigate(`/product/${id}`);
-    } catch (error) {
-      throw error;
-    }
+    productsService
+      .getProductByName(name.toLowerCase())
+      .then((product) => {
+        if (!product?.productByName) {
+          alert("No products found");
+          return;
+        }
+        setName("");
+        console.log("product", product.productByName);
+        setProduct(product);
+        let id = product?.productByName?.id;
+        navigate(`/product/${id}`);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
 
   return (
@@ -95,7 +99,7 @@ const Navbar = () => {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
-              name="search"
+              type="text"
               value={name}
               onChange={handleChange}
             />
