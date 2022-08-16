@@ -6,7 +6,7 @@ const secret =
 const config = {
   DB_URL: process.env.DB_PORT || "127.0.0.1",
   DB_PORT: process.env.DB_PORT || 27017,
-  API_PORT: process.env.API_PORT || 4000,
+  API_PORT: process.env.PORT || 4000,
   CORS: process.env.CORS || "http://localhost:3000/",
   ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET || secret,
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET || secret,
