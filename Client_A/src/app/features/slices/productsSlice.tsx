@@ -20,7 +20,7 @@ const productsSlice = createSlice({
       state.products = action.payload.products;
     },
     setProduct: (state, action) => {
-      state.product = action.payload.product;
+      state.product = action.payload.product || action.payload.productByName;
     },
     clearProduct: (state) => {
       state.product = initialState.product;
