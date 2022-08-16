@@ -3,6 +3,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Container,
   Modal,
   Typography,
 } from "@mui/material";
@@ -36,26 +37,32 @@ const ProductDetails = ({ open, handleClose }: any) => {
           <Loader />
         ) : (
           <Card sx={style}>
-            <img src={product.image} alt={product.name} height="250" />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {product?.name?.replace(
-                  product.name.charAt(0),
-                  product.name.charAt(0).toUpperCase()
-                )}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {product.description}
-              </Typography>
-            </CardContent>
-            <Typography variant="body1" color="text.secondary">
-              $ {product.price},00
-            </Typography>
-            <CardActions>
-              <Button size="small" onClick={handleCloseModal}>
-                Cerrar
-              </Button>
-            </CardActions>
+            {!product ? (
+              <Loader />
+            ) : (
+              <Container>
+                <img src={product.image} alt={product.name} height="250" />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {product?.name?.replace(
+                      product.name.charAt(0),
+                      product.name.charAt(0).toUpperCase()
+                    )}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {product.description}
+                  </Typography>
+                </CardContent>
+                <Typography variant="body1" color="text.secondary">
+                  $ {product.price},00
+                </Typography>
+                <CardActions>
+                  <Button size="small" onClick={handleCloseModal}>
+                    Cerrar
+                  </Button>
+                </CardActions>
+              </Container>
+            )}
           </Card>
         )}
       </Modal>
