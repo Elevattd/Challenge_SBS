@@ -33,7 +33,7 @@ const ProductDetails = ({ open, handleClose }: any) => {
         hideBackdrop={true}
         disableEscapeKeyDown={true}
       >
-        {!product ? (
+        {!Object.keys(product).length > 2 ? (
           <Loader />
         ) : (
           <Card sx={style}>
