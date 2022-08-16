@@ -1,29 +1,11 @@
-import { Box, Button, Grid, Input, Modal, TextField } from "@mui/material";
+import { Box, Button, Grid, Modal, TextField } from "@mui/material";
 import React from "react";
 import { socket } from "../../graphql";
 import productsService from "../../services/productsService";
-import { Product } from "../ProductList/types";
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "auto",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import useProductCreate from "./useProductCreate";
 
 const ProductCreate = () => {
-  const initialState: Product = {
-    name: "",
-    description: "",
-    image: "",
-    price: null,
-  };
-
+  const { style, initialState } = useProductCreate();
   const [input, setInput] = React.useState(initialState);
 
   const [open, setOpen] = React.useState(false);
