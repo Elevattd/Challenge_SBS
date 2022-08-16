@@ -8,7 +8,7 @@ import { useAppSelector } from "./app/hooks";
 
 function App() {
   socket.on("connect", () => {
-    console.log(socket.connect);
+    console.log("Socket connected");
   });
   const footer = useAppSelector((state): boolean => state.ui.footer);
   return (
