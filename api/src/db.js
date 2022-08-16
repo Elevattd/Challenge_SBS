@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-const { DB_URL, DB_PORT } = require("../config");
+const { DB_PORT, MONGODB_URI } = require("../config");
 
 const connect = async () => {
   try {
-    await mongoose.connect(`mongodb://${DB_URL}:${DB_PORT}/challengeSBS`, {
+    await mongoose.connect(MONGODB_URI, {
       keepAlive: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
