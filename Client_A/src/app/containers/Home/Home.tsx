@@ -4,6 +4,7 @@ import productsService from "../../services/productsService";
 import { socket } from "../../graphql";
 import { useEffect } from "react";
 import { actionDispatch } from "../../features/actions";
+import { Container } from "@mui/material";
 
 const Home = () => {
   const { setProducts } = actionDispatch(useAppDispatch());
@@ -16,7 +17,7 @@ const Home = () => {
     } catch (error) {
       throw error;
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   socket.on("updateList", () => {
     productsService.getProducts().then((products) => {
@@ -25,9 +26,9 @@ const Home = () => {
   });
 
   return (
-    <div>
+    <Container>
       <ProductList />
-    </div>
+    </Container>
   );
 };
 

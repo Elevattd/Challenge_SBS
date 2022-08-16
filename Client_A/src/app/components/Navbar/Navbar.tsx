@@ -25,13 +25,18 @@ const Navbar = () => {
   const currentUser = null;
   const navigate = useNavigate();
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    console.log("que mierda pasa", e.target.value);
-    setName(e.target.value.trimStart() as string);
+    setName(e.target.value as string);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") handleSubmit(e);
+  };
+
+  const handleSubmit = async (
+    e: React.SyntheticEvent | React.MouseEvent<HTMLElement>
+  ) => {
     //TODO: Poner alertas aca.
     e.preventDefault();
     productsService
@@ -42,7 +47,6 @@ const Navbar = () => {
           return;
         }
         setName("");
-        console.log("product", product.productByName);
         setProduct(product);
         let id = product?.productByName?.id;
         navigate(`/product/${id}`);
@@ -102,6 +106,7 @@ const Navbar = () => {
               type="text"
               value={name}
               onChange={handleChange}
+              onKeyDown={handleKeyDown}
             />
           </Search>
         </Toolbar>
