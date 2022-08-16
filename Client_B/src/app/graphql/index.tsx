@@ -7,7 +7,6 @@ export const graphQLClient = new GraphQLClient(
     headers: {},
   }
 );
-
 // Socket io connection
 export const socket = io(
   process.env.REACT_APP_API_URL || "http://localhost:4000"
