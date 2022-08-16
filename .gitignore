@@ -112,3 +112,5 @@ api/node_modules
 api/package-lock.json
 client_A/package-lock.json
 client_B/package-lock.json
+Client_A/package-lock.json
+Client_A/package-lock.json
