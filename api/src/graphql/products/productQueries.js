@@ -29,7 +29,8 @@ const productByName = {
   args: {
     name: { type: GraphQLString },
   },
-  resolve: (_, { name }) => Product.findOne({ name }),
+  resolve: async (_, { name }) =>
+    await Product.find({ name: { $regex: name, $options: "i" } }),
 };
 
 module.exports = { products, product, productByName };
